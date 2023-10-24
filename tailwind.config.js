@@ -9,6 +9,7 @@ module.exports = {
       "foot-details": "#E8E8E8",
       "foot-anchor": "#F3F3F3",
       special: "#FF3811",
+      white: '#FFFFFF',
     },
     fontFamily: {
       inter: ["Inter", "sans-serif"],
