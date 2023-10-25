@@ -1,11 +1,176 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../../assets/login.svg";
 import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { sendEmailVerification, updateProfile } from "firebase/auth";
 
 const Register = () => {
   const [showPass, setShowPass] = useState(false);
+  const { createUser, signInWithGoogle, signInWithFacebook, signInWithGithub } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    // const terms = form.terms.checked;
+    // console.log(name, email, password, terms);
+
+    const passRegex =
+      /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>?])[A-Za-z\d!@#$%^&*()_+[\]{};':"\\|,.<>?]{6,}$/;
+
+    // check password
+    if (!passRegex.test(password)) {
+      toast.warn(
+        "Password must contain one uppercase letter, one special character, and should not be less than 6 characters.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        }
+      );
+      return;
+    }
+
+    // create user
+    createUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        // update profile
+        updateProfile(result.user, {
+          displayName: name,
+          photoURL: result?.user?.photoURL,
+        })
+          .then(() => {
+            // Profile updated!
+          })
+          .catch(() => {
+            // An error occurred
+          });
+        // send verification email
+        sendEmailVerification(result.user).then(() => {
+          Swal.fire("Success", "Check inbox for verification mail", "info");
+          // reset the input field
+          form.reset();
+          navigate("/login");
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        // check for duplicate email usage
+        if (error.message === "Firebase: Error (auth/email-already-in-use).") {
+          toast.error("Email already is in use", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else if (error.message === "Firebase: Error (auth/invalid-email).") {
+          toast.error("Invalid Email", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      });
+  };
+
+  // google sign in
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
+
+  // facebook sign in
+  const handleFacebookSignIn = () => {
+    signInWithFacebook()
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
+
+  // github sign in
+  const handleGithubSignIn = () => {
+    signInWithGithub()
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
 
   return (
     <section className="flex flex-col lg:flex-row items-center gap-16 md:gap-24">
@@ -16,7 +181,7 @@ const Register = () => {
         <h1 className="text-center text-sub-head text-2xl md:text-3xl lg:text-4xl font-semibold mb-12">
           Sign Up
         </h1>
-        <form>
+        <form onSubmit={handleRegister}>
           <span className="space-y-4">
             <p className="text-sub-head text-lg font-semibold">Name</p>
             <input
@@ -57,10 +222,7 @@ const Register = () => {
             <input type="checkbox" name="terms" required />
             <p className="text-para mt-0.5">
               I agree the
-              <a
-                href="#"
-                className="text-sub-head font-medium hover:text-head"
-              >
+              <a href="#" className="text-sub-head font-medium hover:text-head">
                 &nbsp;Terms and Conditions
               </a>
             </p>
@@ -74,13 +236,22 @@ const Register = () => {
             Or Sign Up with
           </p>
           <div className="flex justify-center items-center gap-4 mt-8 mb-12">
-            <button className="bg-[#F5F5F8] p-3 rounded-full">
+            <button
+              onClick={handleGoogleSignIn}
+              className="bg-[#F5F5F8] p-3 rounded-full"
+            >
               <FaGoogle></FaGoogle>
             </button>
-            <button className="bg-[#F5F5F8] p-3 rounded-full">
+            <button
+              onClick={handleFacebookSignIn}
+              className="bg-[#F5F5F8] p-3 rounded-full"
+            >
               <FaFacebook></FaFacebook>
             </button>
-            <button className="bg-[#F5F5F8] p-3 rounded-full">
+            <button
+              onClick={handleGithubSignIn}
+              className="bg-[#F5F5F8] p-3 rounded-full"
+            >
               <FaGithub></FaGithub>
             </button>
           </div>
@@ -92,6 +263,7 @@ const Register = () => {
           </p>
         </div>
       </div>
+      <ToastContainer></ToastContainer>
     </section>
   );
 };
