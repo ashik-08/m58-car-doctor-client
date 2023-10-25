@@ -70,7 +70,7 @@ const NavBar = () => {
   );
 
   return (
-    <section className="navbar bg-base-100 my-5 md:my-12">
+    <section className="navbar bg-base-100 my-5 md:my-10 lg:my-12">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">

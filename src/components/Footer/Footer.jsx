@@ -3,7 +3,7 @@ import logo from "../../assets/logo.svg";
 
 const Footer = () => {
   return (
-    <section className="bg-head mt-24 md:mt-32">
+    <section className="bg-head mt-24 md:mt-32 lg:mt-36 xl:mt-40">
       <footer className="footer px-5 lg:px-2 py-24 md:py-32 container mx-auto">
         <aside>
           <Link to="/">

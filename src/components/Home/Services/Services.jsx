@@ -11,7 +11,7 @@ const Services = () => {
   }, []);
 
   return (
-    <section className="mt-24 md:mt-32 lg:mt-36">
+    <section className="mt-24 md:mt-32 lg:mt-40 xl:mt-44">
       <div className="text-center space-y-5">
         <h5 className="text-special text-xl font-bold">Service</h5>
         <h1 className="text-head text-3xl md:text-4xl lg:text-5xl font-bold">
@@ -23,7 +23,7 @@ const Services = () => {
           randomized words which don&apos;t look even slightly believable.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 lg:mt-16">
         {services?.map((service) => (
           <ServiceCard key={service.service_id} service={service}></ServiceCard>
         ))}
