@@ -3,3 +3,8 @@
 @tailwind utilities;
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+.slider-img-gradient {
+  border-radius: 12px;
+  background: linear-gradient(90deg, #151515 0%, rgba(21, 21, 21, 0) 100%);
+}

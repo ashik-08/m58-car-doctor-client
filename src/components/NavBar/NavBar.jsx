@@ -70,7 +70,7 @@ const NavBar = () => {
   );
 
   return (
-    <div className="navbar bg-base-100">
+    <section className="navbar bg-base-100 my-5 md:my-12">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -113,12 +113,12 @@ const NavBar = () => {
               <img src={search} alt="" />
             </button>
           </div>
-          <button className="text-special text-xs md:text-base lg:text-lg font-semibold border border-special rounded-md px-2 py-1.5 md:px-5 md:py-3 hover:bg-special hover:text-neutral-50">
+          <button className="text-special text-xs md:text-base lg:text-lg font-semibold border border-special rounded-md px-2 py-1.5 md:px-5 md:py-3 hover:bg-special hover:text-white">
             Appointment
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

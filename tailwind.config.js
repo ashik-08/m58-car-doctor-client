@@ -10,6 +10,7 @@ module.exports = {
       "foot-anchor": "#F3F3F3",
       special: "#FF3811",
       white: '#FFFFFF',
+      'slider-arrow': '#FFFFFF33',
     },
     fontFamily: {
       inter: ["Inter", "sans-serif"],
