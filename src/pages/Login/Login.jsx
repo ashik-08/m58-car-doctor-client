@@ -1,11 +1,172 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../../assets/login.svg";
 import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { sendPasswordResetEmail } from "firebase/auth";
+import auth from "../../firebase/firebase.config";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
+  const { signInUser, signInWithGoogle, signInWithFacebook, signInWithGithub } =
+    useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    // console.log(email, password);
+
+    // signIn user
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        if (result?.user?.emailVerified) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          form.reset();
+          navigate("/");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Please verify your email address",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        // check for invalid credential
+        if (
+          error.message === "Firebase: Error (auth/invalid-login-credentials)."
+        ) {
+          toast.error("Invalid Email or Password", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      });
+  };
+
+  // google sign in
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
+
+  // facebook sign in
+  const handleFacebookSignIn = () => {
+    signInWithFacebook()
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
+
+  // github sign in
+  const handleGithubSignIn = () => {
+    signInWithGithub()
+      .then((result) => {
+        console.log(result.user);
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
+
+  const handleForgetPass = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    console.log(email);
+
+    // send pass reset email
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "info",
+          title: "Please check your email",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
 
   return (
     <section className="flex flex-col lg:flex-row items-center gap-16 md:gap-24">
@@ -16,7 +177,7 @@ const Login = () => {
         <h1 className="text-center text-sub-head text-2xl md:text-3xl lg:text-4xl font-semibold mb-12">
           Sign In
         </h1>
-        <form>
+        <form onSubmit={handleLogin}>
           <span className="space-y-4">
             <p className="text-sub-head text-lg font-semibold">Email</p>
             <input
@@ -58,13 +219,22 @@ const Login = () => {
             Or Sign In with
           </p>
           <div className="flex justify-center items-center gap-4 mt-8 mb-12">
-            <button className="bg-[#F5F5F8] p-3 rounded-full">
+            <button
+              onClick={handleGoogleSignIn}
+              className="bg-[#F5F5F8] p-3 rounded-full"
+            >
               <FaGoogle></FaGoogle>
             </button>
-            <button className="bg-[#F5F5F8] p-3 rounded-full">
+            <button
+              onClick={handleFacebookSignIn}
+              className="bg-[#F5F5F8] p-3 rounded-full"
+            >
               <FaFacebook></FaFacebook>
             </button>
-            <button className="bg-[#F5F5F8] p-3 rounded-full">
+            <button
+              onClick={handleGithubSignIn}
+              className="bg-[#F5F5F8] p-3 rounded-full"
+            >
               <FaGithub></FaGithub>
             </button>
           </div>
@@ -79,10 +249,7 @@ const Login = () => {
       {/* password reset modal */}
       <dialog id="my_modal_2" className="modal">
         <div className="modal-box flex justify-center text-center">
-          <form
-            // onSubmit={handleForgetPass}
-            className="mt-8 w-72 md:w-96"
-          >
+          <form onSubmit={handleForgetPass} className="mt-8 w-72 md:w-96">
             <div className="mb-4 flex flex-col gap-6">
               <p className="text-sub-head text-lg font-semibold">
                 Enter Your Email
@@ -104,6 +271,7 @@ const Login = () => {
           <button>close</button>
         </form>
       </dialog>
+      <ToastContainer />
     </section>
   );
 };
