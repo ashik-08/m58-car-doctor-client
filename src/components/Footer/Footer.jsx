@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 
 const Footer = () => {
@@ -5,7 +6,9 @@ const Footer = () => {
     <section className="bg-head mt-24 md:mt-32">
       <footer className="footer px-5 lg:px-2 py-24 md:py-32 container mx-auto">
         <aside>
-          <img className="w-16 md:w-24 lg:w-28" src={logo} alt="logo" />
+          <Link to="/">
+            <img className="w-16 md:w-24 lg:w-28" src={logo} alt="logo" />
+          </Link>
           <p className="text-foot-details mt-5">
             Edwin Dias is a software and web <br />
             technologies engineer, a life coach <br />
