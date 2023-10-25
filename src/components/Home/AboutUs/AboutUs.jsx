@@ -15,9 +15,11 @@ const AboutUs = () => {
           />
         </div>
         <div className="px-3 md:px-5 lg:px-8">
-          <p className="text-special text-xl font-bold">About Us</p>
+          <h5 className="text-special text-xl font-bold">About Us</h5>
           <h1 className="text-head text-3xl md:text-4xl lg:text-5xl font-bold mt-5 mb-8">
-            We are qualified <br /> & of experience <br /> in this field
+            We are qualified <br />
+            & of experience <br />
+            in this field
           </h1>
           <p className="text-para md:font-medium">
             There are many variations of passages of Lorem Ipsum available, but
@@ -30,8 +32,6 @@ const AboutUs = () => {
             humour, or randomized words which don&apos;t look even slightly
             believable.{" "}
           </p>
-          <button></button>
-
           <button className="bg-special text-white text-xs md:text-base lg:text-lg font-semibold rounded-md px-3 py-2 md:px-5 md:py-3">
             Get More Info
           </button>
