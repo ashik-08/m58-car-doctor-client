@@ -13,6 +13,7 @@ const NavBar = () => {
     logOut()
       .then(() => {
         console.log("user logged out");
+        console.log(user);
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -95,14 +96,28 @@ const NavBar = () => {
         </NavLink>
       </li>
       {user ? (
-        <li>
-          <button
-            onClick={handleLogout}
-            className="text-sub-head text-sm md:text-base lg:text-lg font-medium"
-          >
-            Logout
-          </button>
-        </li>
+        <>
+          <li>
+            <NavLink
+              to="/cart"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-special text-sm md:text-base lg:text-lg font-semibold"
+                  : "text-sub-head text-sm md:text-base lg:text-lg font-medium"
+              }
+            >
+              My Cart
+            </NavLink>
+          </li>
+          <li>
+            <button
+              onClick={handleLogout}
+              className="text-sub-head text-sm md:text-base lg:text-lg font-medium"
+            >
+              Logout
+            </button>
+          </li>
+        </>
       ) : (
         <li>
           <NavLink

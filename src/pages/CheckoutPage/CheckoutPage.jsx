@@ -33,7 +33,7 @@ const CheckoutPage = () => {
 
     // send data to server
     try {
-      const response = await fetch("http://localhost:5000/services/orders", {
+      const response = await fetch("http://localhost:5000/checkout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
