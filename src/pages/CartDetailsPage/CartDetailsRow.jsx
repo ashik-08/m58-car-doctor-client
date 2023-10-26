@@ -2,7 +2,8 @@ import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 
 const CartDetailsRow = ({ cartItem, cartItems, setCartItems }) => {
-  const { _id, img, service, firstName, lastName, email, price } = cartItem;
+  const { _id, img, service, firstName, lastName, email, price, status } =
+    cartItem;
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -29,6 +30,52 @@ const CartDetailsRow = ({ cartItem, cartItems, setCartItems }) => {
               (items) => items._id !== id
             );
             setCartItems(remainingCartItems);
+          }
+        } catch (error) {
+          console.error(error);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        }
+      }
+    });
+  };
+
+  const handleApproval = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, approve it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        // delete cart item from database
+        try {
+          const response = await fetch(`http://localhost:5000/checkout/${id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ approved: "true" }),
+          });
+          const result = await response.json();
+          console.log(result);
+          if (result.modifiedCount > 0) {
+            Swal.fire("Updated!", "Item has been approved.", "success");
+            // update state
+            const remainingCartItems = cartItems.filter(
+              (items) => items._id !== id
+            );
+            const approved = cartItems.find((item) => item._id === id);
+            approved.status = "true";
+            const newCart = [approved, ...remainingCartItems];
+            setCartItems(newCart);
           }
         } catch (error) {
           console.error(error);
@@ -87,7 +134,18 @@ const CartDetailsRow = ({ cartItem, cartItems, setCartItems }) => {
       </td>
       <td className="text-sub-head md:text-lg font-semibold">${price}</td>
       <th>
-        <button className="btn btn-ghost btn-sm">details</button>
+        {status === "true" ? (
+          <button className="btn-sm bg-transparent text-[#29B170] font-medium capitalize outline outline-1 outline-[#29B170] rounded-lg">
+            Approved
+          </button>
+        ) : (
+          <button
+            onClick={() => handleApproval(_id)}
+            className="btn btn-sm bg-special text-white font-medium capitalize"
+          >
+            Pending
+          </button>
+        )}
       </th>
     </tr>
   );
