@@ -42,7 +42,7 @@ const Login = () => {
             icon: "error",
             title: "Oops...",
             text: "Please verify your email address",
-            footer: '<a href="">Why do I have this issue?</a>',
+            confirmButtonText: "Ok",
           });
         }
       })
@@ -82,12 +82,24 @@ const Login = () => {
       })
       .catch((error) => {
         console.error(error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          footer: '<a href="">Why do I have this issue?</a>',
-        });
+        if (
+          error.message ===
+          "Firebase: Error (auth/account-exists-with-different-credential)."
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Account exists with different credential",
+            confirmButtonText: "Ok",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        }
       });
   };
 
@@ -107,12 +119,24 @@ const Login = () => {
       })
       .catch((error) => {
         console.error(error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          footer: '<a href="">Why do I have this issue?</a>',
-        });
+        if (
+          error.message ===
+          "Firebase: Error (auth/account-exists-with-different-credential)."
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Account exists with different credential",
+            confirmButtonText: "Ok",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        }
       });
   };
 
@@ -132,29 +156,40 @@ const Login = () => {
       })
       .catch((error) => {
         console.error(error);
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-          footer: '<a href="">Why do I have this issue?</a>',
-        });
+        if (
+          error.message ===
+          "Firebase: Error (auth/account-exists-with-different-credential)."
+        ) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Account exists with different credential",
+            confirmButtonText: "Ok",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: '<a href="">Why do I have this issue?</a>',
+          });
+        }
       });
   };
 
   const handleForgetPass = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
-    console.log(email);
+    // console.log(email);
 
     // send pass reset email
     sendPasswordResetEmail(auth, email)
       .then(() => {
         Swal.fire({
-          position: "top-end",
           icon: "info",
-          title: "Please check your email",
-          showConfirmButton: false,
-          timer: 1500,
+          title: "Success!",
+          text: "Please check your email",
+          confirmButtonText: "Ok",
         });
       })
       .catch((error) => {

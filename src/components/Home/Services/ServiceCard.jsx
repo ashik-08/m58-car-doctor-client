@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom";
 import forward from "../../../assets/icons/forward_red.svg";
 import PropTypes from "prop-types";
 
 const ServiceCard = ({ service }) => {
-  const { img, title, price } = service;
+  const { _id, img, title, price } = service;
   return (
     <div className="bg-white p-3 md:p-4 lg:p-6 border border-foot-details rounded-lg">
       <img
@@ -17,13 +18,13 @@ const ServiceCard = ({ service }) => {
         <p className="text-special text-lg md:text-xl font-semibold">
           Price: ${price}
         </p>
-        <button>
+        <Link to={`/checkout/${_id}`}>
           <img
             className="hover:bg-foot-details p-1.5 md:p-3 rounded-full"
             src={forward}
             alt=""
           />
-        </button>
+        </Link>
       </span>
     </div>
   );

@@ -2,8 +2,36 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import shop from "../../assets/icons/shop.svg";
 import search from "../../assets/icons/search.svg";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const NavBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        console.log("user logged out");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Successfully Logged Out",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+          footer: '<a href="">Why do I have this issue?</a>',
+        });
+      });
+  };
+
   const links = (
     <>
       <li>
@@ -66,6 +94,29 @@ const NavBar = () => {
           Contact
         </NavLink>
       </li>
+      {user ? (
+        <li>
+          <button
+            onClick={handleLogout}
+            className="text-sub-head text-sm md:text-base lg:text-lg font-medium"
+          >
+            Logout
+          </button>
+        </li>
+      ) : (
+        <li>
+          <NavLink
+            to="/login"
+            className={({ isActive }) =>
+              isActive
+                ? "text-special text-sm md:text-base lg:text-lg font-semibold"
+                : "text-sub-head text-sm md:text-base lg:text-lg font-medium"
+            }
+          >
+            Login
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
