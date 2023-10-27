@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import login from "../../assets/login.svg";
-import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,8 +10,7 @@ import { sendEmailVerification, updateProfile } from "firebase/auth";
 
 const Register = () => {
   const [showPass, setShowPass] = useState(false);
-  const { createUser, signInWithGoogle, signInWithFacebook, signInWithGithub } =
-    useContext(AuthContext);
+  const { createUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleRegister = (e) => {
@@ -102,117 +100,6 @@ const Register = () => {
       });
   };
 
-  // google sign in
-  const handleGoogleSignIn = () => {
-    signInWithGoogle()
-      .then((result) => {
-        console.log(result.user);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error(error);
-        if (
-          error.message ===
-          "Firebase: Error (auth/account-exists-with-different-credential)."
-        ) {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Account exists with different credential",
-            confirmButtonText: "Ok",
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
-        }
-      });
-  };
-
-  // facebook sign in
-  const handleFacebookSignIn = () => {
-    signInWithFacebook()
-      .then((result) => {
-        console.log(result.user);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error(error);
-        if (
-          error.message ===
-          "Firebase: Error (auth/account-exists-with-different-credential)."
-        ) {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Account exists with different credential",
-            confirmButtonText: "Ok",
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
-        }
-      });
-  };
-
-  // github sign in
-  const handleGithubSignIn = () => {
-    signInWithGithub()
-      .then((result) => {
-        console.log(result.user);
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error(error);
-        if (
-          error.message ===
-          "Firebase: Error (auth/account-exists-with-different-credential)."
-        ) {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "Account exists with different credential",
-            confirmButtonText: "Ok",
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
-        }
-      });
-  };
-
   return (
     <section className="flex flex-col lg:flex-row items-center gap-16 md:gap-24">
       <div className="flex-1">
@@ -272,37 +159,12 @@ const Register = () => {
             <input type="submit" value="Sign Up" />
           </button>
         </form>
-        <div>
-          <p className="text-center text-sub-head text-lg font-medium">
-            Or Sign Up with
-          </p>
-          <div className="flex justify-center items-center gap-4 mt-8 mb-12">
-            <button
-              onClick={handleGoogleSignIn}
-              className="bg-[#F5F5F8] p-3 rounded-full"
-            >
-              <FaGoogle></FaGoogle>
-            </button>
-            <button
-              onClick={handleFacebookSignIn}
-              className="bg-[#F5F5F8] p-3 rounded-full"
-            >
-              <FaFacebook></FaFacebook>
-            </button>
-            <button
-              onClick={handleGithubSignIn}
-              className="bg-[#F5F5F8] p-3 rounded-full"
-            >
-              <FaGithub></FaGithub>
-            </button>
-          </div>
-          <p className="text-center text-para text-lg">
-            Already have an account?{" "}
-            <Link to="/login" className="text-special font-semibold">
-              Login
-            </Link>
-          </p>
-        </div>
+        <p className="text-center text-para text-lg">
+          Already have an account?{" "}
+          <Link to="/login" className="text-special font-semibold">
+            Login
+          </Link>
+        </p>
       </div>
       <ToastContainer></ToastContainer>
     </section>

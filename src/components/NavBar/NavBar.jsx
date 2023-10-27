@@ -139,7 +139,7 @@ const NavBar = () => {
     <section className="navbar bg-base-100 mt-5 mb-8 md:mt-10 md:mb-12 lg:mt-12 lg:mb-14 xl:mb-16">
       <div className="navbar-start">
         <div className="dropdown">
-          <label tabIndex={0} className="btn btn-ghost lg:hidden">
+          <label tabIndex={0} className="btn btn-ghost xl:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -166,7 +166,7 @@ const NavBar = () => {
           <img className="w-16 md:w-24 lg:w-full" src={logo} alt="logo" />
         </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
+      <div className="navbar-center hidden xl:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
       <div className="navbar-end">

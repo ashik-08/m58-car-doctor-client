@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
 import login from "../../assets/login.svg";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebook, FaGithub } from "react-icons/fa";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext, useState } from "react";
@@ -9,11 +9,13 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { sendPasswordResetEmail } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
+import axios from "axios";
 
 const Login = () => {
   const [showPass, setShowPass] = useState(false);
   const { signInUser, signInWithGoogle, signInWithFacebook, signInWithGithub } =
     useContext(AuthContext);
+  const location = useLocation();
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -25,26 +27,52 @@ const Login = () => {
 
     // signIn user
     signInUser(email, password)
-      .then((result) => {
+      .then(async (result) => {
         console.log(result.user);
-        if (result?.user?.emailVerified) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
-            showConfirmButton: false,
-            timer: 1500,
+        // if (result?.user?.emailVerified) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `Successfully Logged In. Welcome ${result?.user?.displayName}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        // form.reset();
+        // navigate(location?.state ? location?.state : "/");
+        // const loggedInUser = result.user;
+        const user = { email: result?.user?.email };
+        // get access token with async await
+        // try {
+        //   const response = await fetch("http://localhost:5000/jwt", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(user),
+        //   });
+        //   // get response as text since a JWT is a string, and not valid JSON objects
+        //   const result = await response.text();
+        //   console.log(result);
+        // } catch (error) {
+        //   console.error(error);
+        // }
+        // get access token with axios
+        axios
+          .post("http://localhost:5000/jwt", user, { withCredentials: true })
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.success) {
+              navigate(location?.state ? location?.state : "/");
+            }
           });
-          form.reset();
-          navigate("/");
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Please verify your email address",
-            confirmButtonText: "Ok",
-          });
-        }
+        // } else {
+        //   Swal.fire({
+        //     icon: "error",
+        //     title: "Oops...",
+        //     text: "Please verify your email address",
+        //     confirmButtonText: "Ok",
+        //   });
+        // }
       })
       .catch((error) => {
         console.error(error);
@@ -78,7 +106,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         console.error(error);
@@ -115,7 +143,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         console.error(error);
@@ -152,7 +180,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         console.error(error);

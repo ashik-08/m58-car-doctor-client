@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import CartDetailsRow from "./CartDetailsRow";
+import axios from "axios";
 
 const CartDetailsPage = () => {
   const { user } = useContext(AuthContext);
@@ -9,12 +10,15 @@ const CartDetailsPage = () => {
   const url = `http://localhost:5000/checkout?email=${user?.email}`;
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setCartItems(data);
-      });
+    // fetch(url)
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     setCartItems(data);
+    // })
+    axios.get(url, {withCredentials: true}).then((res) => {
+      setCartItems(res.data);
+    });
   }, [url]);
 
   return (
