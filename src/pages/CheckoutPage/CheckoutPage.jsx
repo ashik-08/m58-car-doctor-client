@@ -2,12 +2,15 @@ import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import SmallBanner from "../../components/SmallBanner/SmallBanner";
 
 const CheckoutPage = () => {
   const service = useLoaderData();
   const { _id, title, price, img } = service;
 
   const { user } = useContext(AuthContext);
+
+  // const path = 'Home/Checkout';
 
   const handleCheckout = async (e) => {
     e.preventDefault();
@@ -64,7 +67,7 @@ const CheckoutPage = () => {
 
   return (
     <div>
-      <h2>checkout</h2>
+      <SmallBanner path={"Home/Checkout"}>Check Out</SmallBanner>
       <div className="bg-foot-anchor mt-24 md:mt-32 lg:mt-36 xl:mt-40 px-5 md:px-12 lg:px-20 py-20 rounded-xl">
         <form onSubmit={handleCheckout}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -94,7 +97,7 @@ const CheckoutPage = () => {
               <p className="text-sub-head text-lg font-semibold">Phone</p>
               <input
                 className="text-placeholder w-full px-6 py-4 rounded-lg outline outline-1 outline-foot-details"
-                type="number"
+                type="text"
                 name="phone"
                 id=""
                 placeholder="Your Phone"

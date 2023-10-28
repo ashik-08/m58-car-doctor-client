@@ -8,3 +8,7 @@
   border-radius: 12px;
   background: linear-gradient(90deg, #151515 0%, rgba(21, 21, 21, 0) 100%);
 }
+
+.clip-bg {
+  clip-path: polygon(12% 0, 88% 0%, 100% 100%, 0 100%);
+}
