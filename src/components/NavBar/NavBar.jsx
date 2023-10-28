@@ -61,14 +61,14 @@ const NavBar = () => {
       </li>
       <li>
         <NavLink
-          to="/services"
+          to="/addService"
           className={({ isActive }) =>
             isActive
               ? "text-special text-sm md:text-base lg:text-lg font-semibold"
               : "text-sub-head text-sm md:text-base lg:text-lg font-medium"
           }
         >
-          Services
+          Service
         </NavLink>
       </li>
       <li>
@@ -95,7 +95,7 @@ const NavBar = () => {
           Contact
         </NavLink>
       </li>
-      {user ? (
+      {user?.email ? (
         <>
           <li>
             <NavLink

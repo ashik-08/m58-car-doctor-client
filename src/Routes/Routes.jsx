@@ -7,6 +7,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import CheckoutPage from "../pages/CheckoutPage/CheckoutPage";
 import CartDetailsPage from "../pages/CartDetailsPage/CartDetailsPage";
 import PrivateRoute from "./PrivateRoute";
+import AddServicePage from "../pages/AddServicePage/AddServicePage";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
         {
             path: '/',
             element: <HomePage></HomePage>,
+        },
+        {
+            path: '/addService',
+            element: <AddServicePage></AddServicePage>,
         },
         {
             path: '/register',

@@ -66,7 +66,7 @@ const CheckoutPage = () => {
   };
 
   return (
-    <div>
+    <section>
       <SmallBanner path={"Home/Checkout"}>Check Out</SmallBanner>
       <div className="bg-foot-anchor mt-24 md:mt-32 lg:mt-36 xl:mt-40 px-5 md:px-12 lg:px-20 py-20 rounded-xl">
         <form onSubmit={handleCheckout}>
@@ -136,7 +136,7 @@ const CheckoutPage = () => {
           </div>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 
