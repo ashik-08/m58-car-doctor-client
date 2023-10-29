@@ -52,7 +52,7 @@ const AddServicePage = () => {
       });
       const result = await response.json();
       console.log(result);
-      if (result.insertedId) {
+      if (result.status.includes("Added")) {
         Swal.fire({
           icon: "success",
           title: "Success!",
@@ -60,7 +60,7 @@ const AddServicePage = () => {
           confirmButtonText: "Cool",
         });
         form.reset();
-      } else if (result.message === "Already exists in DB") {
+      } else if (result.status.includes("Already exists in DB")) {
         Swal.fire({
           icon: "warning",
           title: "Duplicate!",
