@@ -14,7 +14,13 @@ const AboutUs = () => {
         />
       </div>
       <div className="px-3 md:px-5 lg:px-8">
-        <h5 className="text-special text-xl font-bold">About Us</h5>
+        {/* <h5 className="text-special text-xl font-bold">About Us</h5> */}
+        <div className="relative">
+          <h1 className="absolute bottom-0 -z-10 text-6xl md:text-8xl opacity-5">
+            About Us
+          </h1>
+          <h5 className="text-special text-xl font-bold">About Us</h5>
+        </div>
         <h1 className="text-head text-3xl md:text-4xl lg:text-5xl font-bold mt-5 mb-8">
           We are qualified <br />
           & of experience <br />

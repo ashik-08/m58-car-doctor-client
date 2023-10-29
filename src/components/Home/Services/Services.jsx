@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ServiceCard from "./ServiceCard";
+import Title from "../../Title/Title";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -15,7 +16,8 @@ const Services = () => {
   return (
     <section className="mt-24 md:mt-32 lg:mt-40 xl:mt-44">
       <div className="text-center space-y-5">
-        <h5 className="text-special text-xl font-bold">Service</h5>
+        {/* <h5 className="text-special text-xl font-bold">Service</h5> */}
+        <Title>Service</Title>
         <h1 className="text-head text-3xl md:text-4xl lg:text-5xl font-bold">
           Our Service Area
         </h1>
