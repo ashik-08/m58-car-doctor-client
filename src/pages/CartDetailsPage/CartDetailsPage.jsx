@@ -1,25 +1,28 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import CartDetailsRow from "./CartDetailsRow";
-import axios from "axios";
+// import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const CartDetailsPage = () => {
   const { user } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);
+  const axiosSecure = useAxiosSecure();
 
-  const url = `http://localhost:5000/checkout?email=${user?.email}`;
+  // const url = `http://localhost:5000/checkout?email=${user?.email}`;
+  const url = `/checkout?email=${user?.email}`;
 
   useEffect(() => {
-    // fetch(url)
+    // fetch(url, { credentials: 'include' })
     //   .then((res) => res.json())
     //   .then((data) => {
     //     console.log(data);
     //     setCartItems(data);
     // })
-    axios.get(url, {withCredentials: true}).then((res) => {
+    axiosSecure.get(url).then((res) => {
       setCartItems(res.data);
     });
-  }, [url]);
+  }, [url, axiosSecure]);
 
   return (
     <section className="mt-24 md:mt-32 lg:mt-36 xl:mt-40">

@@ -3,7 +3,7 @@ import SmallBanner from "../../components/SmallBanner/SmallBanner";
 import Swal from "sweetalert2";
 
 const AddServicePage = () => {
-  const [formData, setFormData] = useState({ facilities: [] });
+  const [formData, setFormData] = useState({ facility: [] });
 
   const facilitiesData = [
     { name: "Facility Name 1", details: "Facility Details 1" },
@@ -14,13 +14,13 @@ const AddServicePage = () => {
 
   const handleFacilityChange = (index, e) => {
     const { name, value } = e.target;
-    const updatedFacilities = [...formData.facilities];
+    const updatedFacilities = [...formData.facility];
     // Make sure `updatedFacilities[index]` exists
     if (!updatedFacilities[index]) {
       updatedFacilities[index] = {};
     }
     updatedFacilities[index][name] = value;
-    setFormData({ facilities: updatedFacilities });
+    setFormData({ facility: updatedFacilities });
   };
 
   const handleAddService = async (e) => {
@@ -37,7 +37,7 @@ const AddServicePage = () => {
       img,
       price,
       description,
-      facilities: formData.facilities,
+      facility: formData.facility,
     };
     console.log(newService);
 

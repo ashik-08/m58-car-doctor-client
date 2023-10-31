@@ -45,7 +45,7 @@ const Register = () => {
 
     // create user
     createUser(email, password)
-      .then((result) => {
+      .then(async (result) => {
         console.log(result.user);
         // update profile
         updateProfile(result.user, {
@@ -67,9 +67,31 @@ const Register = () => {
             confirmButtonText: "Ok",
           });
           // reset the input field
-          form.reset();
-          navigate("/login");
+          // form.reset();
+          // navigate("/login");
         });
+        // reset the input field
+        form.reset();
+        navigate("/");
+        // const loggedInUser = { email: result?.user?.email };
+        // // get access token with async await
+        // try {
+        //   const response = await fetch("http://localhost:5000/jwt", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify(loggedInUser),
+        //     credentials: "include",
+        //   });
+        //   const result = await response.json();
+        //   console.log(result);
+        //   if (result.success) {
+        //     navigate(location?.state ? location?.state : "/");
+        //   }
+        // } catch (error) {
+        //   console.error(error);
+        // }
       })
       .catch((error) => {
         console.error(error);
