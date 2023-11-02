@@ -58,7 +58,7 @@ const AuthProvider = ({ children }) => {
     const loggedInUser = { email: user?.email };
     setLoading(true);
     axios
-      .post("http://localhost:5000/logout", loggedInUser, {
+      .post("https://m58-car-doctor-server.vercel.app/logout", loggedInUser, {
         withCredentials: true,
       })
       .then((res) => {
@@ -77,7 +77,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         // get access token with axios
         axios
-          .post("http://localhost:5000/jwt", loggedInUser, {
+          .post("https://m58-car-doctor-server.vercel.app/jwt", loggedInUser, {
             withCredentials: true,
           })
           .then((res) => {

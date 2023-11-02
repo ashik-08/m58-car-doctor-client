@@ -76,7 +76,7 @@ const Register = () => {
         // const loggedInUser = { email: result?.user?.email };
         // // get access token with async await
         // try {
-        //   const response = await fetch("http://localhost:5000/jwt", {
+        //   const response = await fetch("https://m58-car-doctor-server.vercel.app/jwt", {
         //     method: "POST",
         //     headers: {
         //       "Content-Type": "application/json",

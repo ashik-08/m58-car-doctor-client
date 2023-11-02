@@ -43,13 +43,16 @@ const AddServicePage = () => {
 
     // send data to server
     try {
-      const response = await fetch("http://localhost:5000/services", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newService),
-      });
+      const response = await fetch(
+        "https://m58-car-doctor-server.vercel.app/services",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newService),
+        }
+      );
       const result = await response.json();
       console.log(result);
       if (result.status.includes("Added")) {

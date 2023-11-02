@@ -42,7 +42,7 @@ const Login = () => {
         // const loggedInUser = { email: result?.user?.email };
         // // get access token with axios
         // axios
-        //   .post("http://localhost:5000/jwt", loggedInUser, {
+        //   .post("https://m58-car-doctor-server.vercel.app/jwt", loggedInUser, {
         //     withCredentials: true,
         //   })
         //   .then((res) => {

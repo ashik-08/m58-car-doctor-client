@@ -18,9 +18,12 @@ const CartDetailsRow = ({ cartItem, cartItems, setCartItems }) => {
       if (result.isConfirmed) {
         // delete cart item from database
         try {
-          const response = await fetch(`http://localhost:5000/checkout/${id}`, {
-            method: "DELETE",
-          });
+          const response = await fetch(
+            `https://m58-car-doctor-server.vercel.app/checkout/${id}`,
+            {
+              method: "DELETE",
+            }
+          );
           const result = await response.json();
           console.log(result);
           if (result.deletedCount > 0) {
@@ -57,13 +60,16 @@ const CartDetailsRow = ({ cartItem, cartItems, setCartItems }) => {
       if (result.isConfirmed) {
         // delete cart item from database
         try {
-          const response = await fetch(`http://localhost:5000/checkout/${id}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ approved: "true" }),
-          });
+          const response = await fetch(
+            `https://m58-car-doctor-server.vercel.app/checkout/${id}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ approved: "true" }),
+            }
+          );
           const result = await response.json();
           console.log(result);
           if (result.modifiedCount > 0) {

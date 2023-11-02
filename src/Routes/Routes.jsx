@@ -15,32 +15,43 @@ const router = createBrowserRouter([
     element: <MainLayout></MainLayout>,
     errorElement: <ErrorPage></ErrorPage>,
     children: [
-        {
-            path: '/',
-            element: <HomePage></HomePage>,
-        },
-        {
-            path: '/addService',
-            element: <AddServicePage></AddServicePage>,
-        },
-        {
-            path: '/register',
-            element: <Register></Register>,
-        },
-        {
-            path: '/login',
-            element: <Login></Login>,
-        },
-        {
-            path: '/checkout/:id',
-            element: <PrivateRoute><CheckoutPage></CheckoutPage></PrivateRoute>,
-            loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`),
-        },
-        {
-            path: '/cart',
-            element: <PrivateRoute><CartDetailsPage></CartDetailsPage></PrivateRoute>,
-        }
-    ]
+      {
+        path: "/",
+        element: <HomePage></HomePage>,
+      },
+      {
+        path: "/addService",
+        element: <AddServicePage></AddServicePage>,
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/checkout/:id",
+        element: (
+          <PrivateRoute>
+            <CheckoutPage></CheckoutPage>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://m58-car-doctor-server.vercel.app/services/${params.id}`
+          ),
+      },
+      {
+        path: "/cart",
+        element: (
+          <PrivateRoute>
+            <CartDetailsPage></CartDetailsPage>
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
 ]);
 

@@ -9,7 +9,7 @@ const CartDetailsPage = () => {
   const [cartItems, setCartItems] = useState([]);
   const axiosSecure = useAxiosSecure();
 
-  // const url = `http://localhost:5000/checkout?email=${user?.email}`;
+  // const url = `https://m58-car-doctor-server.vercel.app/checkout?email=${user?.email}`;
   const url = `/checkout?email=${user?.email}`;
 
   useEffect(() => {

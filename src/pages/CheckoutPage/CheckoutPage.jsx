@@ -36,13 +36,16 @@ const CheckoutPage = () => {
 
     // send data to server
     try {
-      const response = await fetch("http://localhost:5000/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(order),
-      });
+      const response = await fetch(
+        "https://m58-car-doctor-server.vercel.app/checkout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(order),
+        }
+      );
       const result = await response.json();
       console.log(result);
       if (result.insertedId) {
